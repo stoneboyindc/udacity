@@ -43,21 +43,25 @@ class LinkedList:
 
 def union(llist_1, llist_2):
     # Your Solution Here
+    unionLL = LinkedList()
     result = {}
     temp = llist_1.head
     while (temp):
         if temp.value not in result:
             result[temp.value] = 1
+            unionLL.append(temp.value)
         temp = temp.next
     temp = llist_2.head
     while (temp):
         if temp.value not in result:
             result[temp.value] = 1
+            unionLL.append(temp.value)
         temp = temp.next
-    return result.keys()
+    return unionLL
 
 def intersection(llist_1, llist_2):
     # Your Solution Here
+    intersectionLL = LinkedList()
     set1 = {}
     itrsSet = {}
     temp = llist_1.head
@@ -69,8 +73,9 @@ def intersection(llist_1, llist_2):
     while (temp):
         if temp.value in set1:
             itrsSet[temp.value] = 1
+            intersectionLL.append(temp.value)
         temp = temp.next
-    return itrsSet.keys()
+    return intersectionLL
 
 # Test case 1
 
@@ -86,8 +91,8 @@ for i in element_1:
 for i in element_2:
     linked_list_2.append(i)
 
-print (union(linked_list_1,linked_list_2))        # dict_keys([3, 2, 4, 35, 6, 65, 21, 32, 9, 1, 11])
-print (intersection(linked_list_1,linked_list_2)) # dict_keys([6, 4, 21])
+print (union(linked_list_1,linked_list_2))        # 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 21 -> 32 -> 9 -> 1 -> 11 -> 
+print (intersection(linked_list_1,linked_list_2)) # 6 -> 4 -> 6 -> 21 -> 
 
 # Test case 2
 
@@ -103,5 +108,17 @@ for i in element_1:
 for i in element_2:
     linked_list_4.append(i)
 
-print (union(linked_list_3,linked_list_4))        # dict_keys([3, 2, 4, 35, 6, 65, 23, 1, 7, 8, 9, 11, 21])
-print (intersection(linked_list_3,linked_list_4)) # dict_keys([])
+print (union(linked_list_3,linked_list_4))        # 3 -> 2 -> 4 -> 35 -> 6 -> 65 -> 23 -> 1 -> 7 -> 8 -> 9 -> 11 -> 21 -> 
+print (intersection(linked_list_3,linked_list_4)) # <empty>
+
+# Test case 3 - Edge case - empty set input
+linked_list_5 = LinkedList()
+linked_list_6 = LinkedList()
+
+element_6 = [1,7,8,9,11,21,1]
+
+for i in element_6:
+    linked_list_6.append(i)
+
+print (union(linked_list_5,linked_list_6))        # 1 -> 7 -> 8 -> 9 -> 11 -> 21 -> 
+print (intersection(linked_list_5,linked_list_6)) # <empty>

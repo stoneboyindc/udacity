@@ -17,14 +17,20 @@ def find_files(suffix, path):
        a list of paths
     """
     result = []
-    listDirs = os.listdir(path)
-    for i in listDirs:
-        item = os.path.join(path, i)
-        if os.path.isdir(item):
-            result += find_files(suffix, item)
-        if os.path.isfile(item):
-            if item.endswith(suffix):
-                result.append(item)
+    try:
+        listDirs = os.listdir(path)
+        for i in listDirs:
+            item = os.path.join(path, i)
+            if os.path.isdir(item):
+                result += find_files(suffix, item)
+            if os.path.isfile(item):
+                if item.endswith(suffix):
+                    result.append(item)
+    except FileNotFoundError:
+        print (path, "does not exist.")
+    except NotADirectoryError:
+        if path.endswith(suffix):
+            result.append(path)
     return result
 
 ## Locally save and call this file ex.py ##
@@ -36,8 +42,8 @@ def find_files(suffix, path):
 
 print (find_files(".c", "C:\\Temp\\testdir\\testdir"))  # ['C:\\Temp\\testdir\\testdir\\subdir1\\a.c', 'C:\\Temp\\testdir\\testdir\\subdir3\\subsubdir1\\b.c', 'C:\\Temp\\testdir\\testdir\\subdir5\\a.c', 'C:\\Temp\\testdir\\testdir\\t1.c']
 
-# Test Case 2 - Edge case - Use provided `testdir.zip` file
-print (find_files(".cpp", "C:\\Temp\\testdir\\testdir"))  # []
+# Test Case 2 - Edge case - Use a file as an input argument for path
+print (find_files(".c", "C:\\Temp\\testdir\\testdir\\subdir1\\a.c"))  # ['C:\\Temp\\testdir\\testdir\\subdir1\\a.c']
 
 # Test Case 3 - Edge case - Use provided `testdir.zip` file but the wrong input
-print (find_files(".cpp", "C:\\Temp\\testdir\\testdirX"))  # expected such an error message: FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Temp\\testdir\\testdirX'
+print (find_files(".cpp", "C:\\Temp\\testdir\\testdirX"))  # [] with an error message printed out C:\\Temp\\testdir\\testdirX does not exist.

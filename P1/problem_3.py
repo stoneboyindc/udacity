@@ -40,6 +40,10 @@ def assignCodes (node, pat='') :
         assignCodes(node[1], pat+"1")    # then do the right branch.
 
 def huffman_encoding(data):
+    if len(data) == 0:
+        print("No data to encode!")
+        return None, None
+
     freqDict = make_frequency_dict(data)
     # print("frequency:", freqDict)
 
@@ -48,11 +52,15 @@ def huffman_encoding(data):
 
     freq = sortFreq(freqDict)
     # print("freq:",freq)
+    freqCount = len(freq)
 
     tree = buildTree(freq)
     # print("tree:", tree)
 
-    tt = trimTree(tree)
+    if freqCount == 1:
+        tt = (tree[1][0], '0')
+    else:
+        tt = trimTree(tree)
     # print("tt:", tt)
 
     assignCodes(tt)
@@ -80,7 +88,8 @@ def huffman_decoding(data,tree):
 
 if __name__ == "__main__":
     codes = {}
-
+# Test code below
+# Test Case 1 - Normal case 
     a_great_sentence = "The bird is the word"
 
     print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
@@ -95,3 +104,19 @@ if __name__ == "__main__":
 
     print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
     print ("The content of the encoded data is: {}\n".format(decoded_data))
+# Test Case 2 - Edge case - string of the same character repeated multiple times like "AAAAAAA".
+    codes = {}
+    a_repeated_chars = "AAAAAAA"
+    encoded_data, tree = huffman_encoding(a_repeated_chars)
+    print(encoded_data);
+    # print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
+    decoded_data = huffman_decoding(encoded_data, tree)
+    
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print ("The content of the encoded data is: {}\n".format(decoded_data))
+
+# Test Case 3 - Edge case - empty string input
+    codes = {}
+    emptyString = ""
+    encoded_data, tree = huffman_encoding(emptyString)  # print a warning message, `No data to encode!`
