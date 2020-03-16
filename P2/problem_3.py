@@ -1,8 +1,3 @@
-# This function takes last element as pivot, places
-# the pivot element at its correct position in sorted
-# array, and places all smaller (smaller than pivot)
-# to left of pivot and all greater elements to right
-# of pivot
 def partition(arr, low, high):
     i = low - 1  # index of smaller element
     pivot = arr[high]  # pivot
@@ -39,15 +34,6 @@ def quickSort(arr, low, high):
         quickSort(arr, pi + 1, high)
 
 
-# # Driver code to test above
-# arr = [10, 7, 8, 9, 1, 5]
-# n = len(arr)
-# quickSort(arr, 0, n - 1)
-# print("Sorted array is:")
-# for i in range(n):
-#     print("%d" % arr[i]),
-
-
 def rearrange_digits(input_list):
     """
     Rearrange Array Elements so as to form two number such that their sum is maximum.
@@ -80,6 +66,15 @@ def test_function(test_case):
         print("Fail")
 
 
+# Test code below
+# Test Case 1 - Normal case
 test_function([[1, 2, 3, 4, 5], [542, 31]])
 test_case = [[4, 6, 2, 5, 9, 8], [964, 852]]
 test_function(test_case)
+
+# Test Case 2 - Edge case: Every element are the same
+print(rearrange_digits([1, 1, 1, 1, 1, 1, 1]))  # (1111, 111)
+
+# Test Case 3 - Edge case: an array of single element
+print(rearrange_digits([1]))  # (1, 0)
+

@@ -45,6 +45,10 @@ def rotated_array_search(input_list, number):
        int: Index or -1
     """
     result = -1
+    if len(input_list) <= 0:
+        print("Please input a non-empty array!")
+        return result
+
     pivotIdx = findPivot(input_list)
     if number == input_list[0]:
         return 0
@@ -76,8 +80,21 @@ def test_function(test_case):
 # arr = [6, 7, 8, 9, 10, 1, 2, 3, 4]
 # print(rotated_array_search(arr, 6))
 # print(rotated_array_search(arr, 1))
+
+# Test code below
+# Test Case 1 - Normal case
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 6])
 test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 1])
 test_function([[6, 7, 8, 1, 2, 3, 4], 8])
 test_function([[6, 7, 8, 1, 2, 3, 4], 1])
 test_function([[6, 7, 8, 1, 2, 3, 4], 10])
+
+print(rotated_array_search([6, 7, 8, 9, 10, 1, 2, 3, 4], 1))  # 5
+print(rotated_array_search([6, 7, 8, 9, 10, 1, 2, 3, 4], 7))  # 1
+
+# Test Case 2 - Edge case: The target does not exist in the array
+print(rotated_array_search([6, 7, 8, 9, 10, 1, 2, 3, 4], 11))  # -1
+
+# Test Case 3 - Edge case: The target does not exist in the array
+print(rotated_array_search([], 1))  # -1 Please input a non-empty array!
+
