@@ -36,18 +36,22 @@ class RouteTrie:
         # Starting at the root, navigate the Trie to find a match for this path
         # Return the handler for a match, or None for no match
         root = self.root
+        handler = self.root.handler
         len1 = len(paths)
         if len1 == 0:
             return self.root.handler
         for i in range(len1):
             char = paths[i]
-            if root.children == {}:
-                return root.handler
+            # if root.children == {}:
+            #     return handler
             if char not in root.children:
                 return None
             # if char in root.children and root.children[char].children == {}:
             #     return root.children[char].handler
             root = root.children[char]
+            handler = root.handler
+            if i == len1 - 1 and char == root.value:
+                return handler
 
         return None
 
@@ -89,9 +93,12 @@ class Router:
         for i in segments:
             if i != "":
                 paths.append(i)
-        print("paths: ", paths)
+        # print("paths: ", paths)
         return paths
 
+
+# Test code below
+# Test Case 1 - Normal case
 
 # Here are some test cases and expected outputs you can use to test your implementation
 
@@ -114,3 +121,18 @@ print(
     router.lookup("/home/about/me")
 )  # should print 'not found handler' or None if you did not implement one
 
+# Test Case 2 - Edge case - empty path
+router = Router(
+    "root handler", "not found handler"
+)  # remove the 'not found handler' if you did not implement this
+router.add_handler("/home/about", "about handler")  # add a route
+
+print(router.lookup(""))  # should print 'root handler'
+
+# Test Case 3 - Edge case - an invalid path
+router = Router(
+    "root handler", "not found handler"
+)  # remove the 'not found handler' if you did not implement this
+router.add_handler("/home/about", "about handler")  # add a route
+
+print(router.lookup("home"))  # should print "not found handler"
